@@ -6,10 +6,18 @@ from models import db, User, Tree, Question, Submission, Answer
 from datetime import date
 import csv
 from io import StringIO
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
+
+# Create DB on first request
+@app.before_first_request
+def create_db_if_not_exists():
+    db_path = '/tmp/tree.db'
+    if not os.path.exists(db_path):
+        db.create_all()
 
 # Flask-Login Setup
 login_manager = LoginManager()
@@ -149,7 +157,6 @@ def logout():
     flash('Logged out successfully.', 'info')
     return redirect(url_for('login'))
 
-
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == 'POST':
@@ -170,4 +177,3 @@ def reset_password():
 
 if __name__ == '__main__':
     app.run()
-
