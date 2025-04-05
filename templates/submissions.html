@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Your Submitted Observations</h2>
+
+{% if submissions %}
+  {% for submission in submissions %}
+    <div class="submission-block">
+      <h3>{{ submission.tree.name }} - {{ submission.submission_date.strftime('%Y-%m-%d') }}</h3>
+      <ul>
+        {% for answer in submission.answers %}
+          <li>
+            <strong>{{ answer.question.question_text }}</strong><br>
+            Your answer: {{ answer.selected_option }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <hr>
+  {% endfor %}
+{% else %}
+  <p>No submissions yet.</p>
+{% endif %}
+
+{% endblock %}

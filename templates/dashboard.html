@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Select a Tree to Observe</h2>
+<ul>
+    {% for tree in trees %}
+    <li>
+        {{ tree.name }} – 
+        <a href="{{ url_for('observe', tree_id=tree.id) }}">Start Observation</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

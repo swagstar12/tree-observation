@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Observation Questions</h2>
+<form method="POST">
+    {% for question in questions %}
+        <div class="question-block">
+            <p><strong>{{ loop.index }}. {{ question.question_text }}</strong></p>
+            <label><input type="radio" name="{{ question.id }}" value="A" required> {{ question.option_a }}</label><br>
+            <label><input type="radio" name="{{ question.id }}" value="B"> {{ question.option_b }}</label><br>
+            <label><input type="radio" name="{{ question.id }}" value="C"> {{ question.option_c }}</label><br>
+            <label><input type="radio" name="{{ question.id }}" value="D"> {{ question.option_d }}</label><br>
+        </div>
+        <hr>
+    {% endfor %}
+    <button type="submit">Submit Answers</button>
+</form>
+{% endblock %}

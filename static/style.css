@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+header {
+    background: #00796B;
+    color: white;
+    padding: 10px;
+}
+.flash {
+    list-style: none;
+    padding: 10px;
+    background-color: #ffe0b2;
+    border: 1px solid #ff9800;
+}
+button {
+    padding: 8px 12px;
+    margin-top: 10px;
+}
+.question-block {
+    margin-bottom: 15px;
+}
