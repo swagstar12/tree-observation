@@ -176,6 +176,21 @@ def reset_password():
     return render_template('reset_password.html')
 
 
+@app.route('/submissions')
+@login_required
+def view_submissions():
+    submissions = Submission.query.filter_by(user_id=current_user.id).order_by(Submission.submission_date.desc()).all()
+
+    # Attach answers and their questions to each submission
+    for sub in submissions:
+        sub.answers = Answer.query.filter_by(submission_id=sub.id).all()
+        for ans in sub.answers:
+            ans.question = Question.query.get(ans.question_id)
+        sub.tree = Tree.query.get(sub.tree_id)
+
+    return render_template('submissions.html', submissions=submissions)
+
+
 @app.route('/init_trees')
 def init_trees():
     if Tree.query.first():
