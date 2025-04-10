@@ -13,11 +13,11 @@ app.config.from_object(Config)
 db.init_app(app)
 
 # Create DB on first request
-@app.before_first_request
-def create_db_if_not_exists():
-    db_path = '/tmp/tree.db'
-    if not os.path.exists(db_path):
-        db.create_all()
+#@app.before_first_request
+#def create_db_if_not_exists():
+#    db_path = '/tmp/tree.db'
+#    if not os.path.exists(db_path):
+#        db.create_all()
 
 # Flask-Login Setup
 login_manager = LoginManager()
@@ -176,4 +176,7 @@ def reset_password():
     return render_template('reset_password.html')
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Only run locally!
     app.run()
+
