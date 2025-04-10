@@ -175,6 +175,23 @@ def reset_password():
 
     return render_template('reset_password.html')
 
+
+@app.route('/init_trees')
+def init_trees():
+    if Tree.query.first():
+        return "Trees already initialized."
+
+    tree_names = [
+        "Neem", "Peepal", "Banyan", "Mango", "Ashoka",
+        "Gulmohar", "Tamarind", "Jackfruit", "Eucalyptus", "Indian Almond"
+    ]
+
+    for name in tree_names:
+        db.session.add(Tree(name=name))
+
+    db.session.commit()
+    return "10 Trees have been added successfully!"
+
 @app.route('/init_db')
 def init_db():
     db.create_all()
