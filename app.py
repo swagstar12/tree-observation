@@ -192,6 +192,41 @@ def init_trees():
     db.session.commit()
     return "10 Trees have been added successfully!"
 
+
+@app.route('/init_questions')
+def init_questions():
+    if Question.query.first():
+        return "Questions already initialized."
+
+    common_questions = [
+        ('What color are the leaves?', 'Green', 'Yellow', 'Red', 'Brown'),
+        ('Are there any flowers visible?', 'Yes', 'No', 'Few', 'Many'),
+        ('Is the tree shedding leaves?', 'Yes', 'No', 'Partially', 'Cannot say'),
+        ('Do you see any insects?', 'Yes', 'No', 'Few', 'Many'),
+        ('What is the moisture condition around the tree?', 'Wet', 'Dry', 'Muddy', 'Normal'),
+        ('How is the sunlight exposure?', 'Full Sun', 'Partial', 'Shade', 'Varies'),
+        ('Is the tree trunk healthy?', 'Yes', 'No', 'Some damage', 'Cannot say'),
+        ('Any signs of animal activity?', 'Birds', 'Insects', 'Squirrels', 'None'),
+        ('Are there any new buds?', 'Yes', 'No', 'Few', 'Not sure'),
+        ('Are there fallen fruits?', 'Yes', 'No', 'Some', 'Many')
+    ]
+
+    trees = Tree.query.all()
+
+    for tree in trees:
+        for q_text, a, b, c, d in common_questions:
+            db.session.add(Question(
+                tree_id=tree.id,
+                question_text=q_text,
+                option_a=a,
+                option_b=b,
+                option_c=c,
+                option_d=d
+            ))
+
+    db.session.commit()
+    return "Questions added to each tree!"
+
 @app.route('/init_db')
 def init_db():
     db.create_all()
